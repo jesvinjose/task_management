@@ -1,0 +1,355 @@
+{
+  "info": {
+    "_postman_id": "98219b1c-d086-4607-a1ad-7a79bacdf57d",
+    "name": "Task Management APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27687993"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "register user",
+          "id": "44c2df20-1a1b-4498-b376-59b33a0c56ab",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Alice Example\",\r\n  \"email\": \"alice@example.com\",\r\n  \"password\": \"Str0ngP@ssw0rd\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}users/registerUser",
+              "host": [
+                "{{baseurl}}users"
+              ],
+              "path": [
+                "registerUser"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "d90fbc7b-054d-4ed2-b909-0f6607eb2fc2"
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "e91b14a5-03bb-43a9-9996-01b8719d672e",
+                "exec": [
+                  "// Parse response JSON safely\r",
+                  "let res = pm.response.json();\r",
+                  "\r",
+                  "// Save access token\r",
+                  "if (res.data && res.data.accessToken) {\r",
+                  "    pm.environment.set(\"access_token\", res.data.accessToken);\r",
+                  "    console.log(\"Access token saved successfully\");\r",
+                  "}\r",
+                  "\r",
+                  "// Save refresh token\r",
+                  "if (res.data && res.data.refreshToken) {\r",
+                  "    pm.environment.set(\"refresh_token\", res.data.refreshToken);\r",
+                  "    console.log(\"Refresh token saved successfully\");\r",
+                  "}\r",
+                  "\r",
+                  "// Verify status\r",
+                  "pm.test(\"Login API returned success status\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "ac84b4ca-c276-42db-9876-b01cb54f0a2f",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"alice@example.com\",\r\n  \"password\": \"Str0ngP@ssw0rd\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}auth/loginUser",
+              "host": [
+                "{{baseurl}}auth"
+              ],
+              "path": [
+                "loginUser"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Handle Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "a321015b-b695-4f7c-80ac-3cf40d739f70",
+                "exec": [
+                  "let res = pm.response.json();\r",
+                  "\r",
+                  "// Update access token\r",
+                  "if (res.data && res.data.accessToken) {\r",
+                  "    pm.environment.set(\"access_token\", res.data.accessToken);\r",
+                  "    console.log(\"New access token updated\");\r",
+                  "}\r",
+                  "\r",
+                  "// Update refresh token\r",
+                  "if (res.data && res.data.refreshToken) {\r",
+                  "    pm.environment.set(\"refresh_token\", res.data.refreshToken);\r",
+                  "    console.log(\"New refresh token updated\");\r",
+                  "}\r",
+                  "\r",
+                  "pm.test(\"Refresh token API executed\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.equal(200);\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "d7add9fd-6f6d-40b0-b4ae-919f0d7c9d19",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmY1MjBkOGIwMGMyYjA5ZTdiZmFlZSIsImVtYWlsIjoiYWxpY2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ3MDk4NzksImV4cCI6MTc2NDc5NjI3OX0.MgVAeLVA5MGyeSFYDrIUOVlFAcDiOfRse6FFP572F9w\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}auth/handleRefreshToken",
+              "host": [
+                "{{baseurl}}auth"
+              ],
+              "path": [
+                "handleRefreshToken"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "9fcd9a61-4867-407e-bea7-d5541a4467ad"
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "create task",
+          "id": "bebc62fd-8020-4b9e-b810-caf13323b719",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Fix UI bug\",\r\n  \"description\": \"Fix button alignment\",\r\n  \"priority\": \"High\",\r\n  \"status\": \"Pending\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}tasks",
+              "host": [
+                "{{baseurl}}tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all tasks",
+          "id": "637a26b8-a5ca-421c-81fb-84f625c3e09f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}tasks?status=Pending&priority=High&page=1&limit=5",
+              "host": [
+                "{{baseurl}}tasks"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "Pending"
+                },
+                {
+                  "key": "priority",
+                  "value": "High"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get task by id",
+          "id": "5f9e5f3d-48f7-4a5a-83be-9b5063a576a3",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseurl}}tasks/692f58c5f4e15900eff7e611",
+              "host": [
+                "{{baseurl}}tasks"
+              ],
+              "path": [
+                "692f58c5f4e15900eff7e611"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update task",
+          "id": "3e8ea6ad-c620-4584-80e0-54ebfda0942c",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Fix UI bug - Updated\",\r\n  \"description\": \"Updated description\",\r\n  \"priority\": \"Medium\",\r\n  \"status\": \"In Progress\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}tasks/692f58c5f4e15900eff7e611",
+              "host": [
+                "{{baseurl}}tasks"
+              ],
+              "path": [
+                "692f58c5f4e15900eff7e611"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete task",
+          "id": "9aefcfcc-32a3-47c6-af9f-80220c37b688",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseurl}}tasks/692f58c5f4e15900eff7e611",
+              "host": [
+                "{{baseurl}}tasks"
+              ],
+              "path": [
+                "692f58c5f4e15900eff7e611"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "3fa358a6-da52-4557-bb1d-77ad32617547"
+    }
+  ]
+}
