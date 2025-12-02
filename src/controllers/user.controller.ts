@@ -41,8 +41,8 @@ export const registerUser = async (
       },
       is_show: true,
     });
-  } catch (error) {
-    console.error("Register User Error:", error);
+  } catch (error: any) {
+    console.error("Register User Error:", error.message);
     next(error);
   }
 };

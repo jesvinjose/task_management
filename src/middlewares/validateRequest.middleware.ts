@@ -44,8 +44,8 @@ export const validateRequest = (schema: ValidatorSchema) => {
       }
 
       next();
-    } catch (err) {
-      console.error(err);
+    } catch (err:any) {
+      console.error(err.message);
       return sendApiResponse(res, 500, false, "Validation error", {
         is_show: true,
       });

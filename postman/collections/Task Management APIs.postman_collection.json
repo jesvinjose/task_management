@@ -101,64 +101,6 @@
             }
           },
           "response": []
-        },
-        {
-          "name": "Handle Refresh Token",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "a321015b-b695-4f7c-80ac-3cf40d739f70",
-                "exec": [
-                  "let res = pm.response.json();\r",
-                  "\r",
-                  "// Update access token\r",
-                  "if (res.data && res.data.accessToken) {\r",
-                  "    pm.environment.set(\"access_token\", res.data.accessToken);\r",
-                  "    console.log(\"New access token updated\");\r",
-                  "}\r",
-                  "\r",
-                  "// Update refresh token\r",
-                  "if (res.data && res.data.refreshToken) {\r",
-                  "    pm.environment.set(\"refresh_token\", res.data.refreshToken);\r",
-                  "    console.log(\"New refresh token updated\");\r",
-                  "}\r",
-                  "\r",
-                  "pm.test(\"Refresh token API executed\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.equal(200);\r",
-                  "});\r",
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "id": "d7add9fd-6f6d-40b0-b4ae-919f0d7c9d19",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmY1MjBkOGIwMGMyYjA5ZTdiZmFlZSIsImVtYWlsIjoiYWxpY2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ3MDk4NzksImV4cCI6MTc2NDc5NjI3OX0.MgVAeLVA5MGyeSFYDrIUOVlFAcDiOfRse6FFP572F9w\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseurl}}auth/handleRefreshToken",
-              "host": [
-                "{{baseurl}}auth"
-              ],
-              "path": [
-                "handleRefreshToken"
-              ]
-            }
-          },
-          "response": []
         }
       ],
       "id": "9fcd9a61-4867-407e-bea7-d5541a4467ad"
@@ -184,7 +126,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"title\": \"Fix UI bug\",\r\n  \"description\": \"Fix button alignment\",\r\n  \"priority\": \"High\",\r\n  \"status\": \"Pending\"\r\n}\r\n",
+              "raw": "{\r\n  \"title\": \"Fix Backend bug\",\r\n  \"description\": \"Fix update api\",\r\n  \"priority\": \"High\",\r\n  \"status\": \"Pending\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -229,27 +171,9 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}tasks?status=Pending&priority=High&page=1&limit=5",
+              "raw": "{{baseurl}}tasks",
               "host": [
                 "{{baseurl}}tasks"
-              ],
-              "query": [
-                {
-                  "key": "status",
-                  "value": "Pending"
-                },
-                {
-                  "key": "priority",
-                  "value": "High"
-                },
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "limit",
-                  "value": "5"
-                }
               ]
             }
           },
@@ -272,12 +196,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}tasks/692f58c5f4e15900eff7e611",
+              "raw": "{{baseurl}}tasks/692f6914d608e7cd2ea24302",
               "host": [
                 "{{baseurl}}tasks"
               ],
               "path": [
-                "692f58c5f4e15900eff7e611"
+                "692f6914d608e7cd2ea24302"
               ]
             }
           },
@@ -309,12 +233,12 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}tasks/692f58c5f4e15900eff7e611",
+              "raw": "{{baseurl}}tasks/692f67777241104749ab13dd",
               "host": [
                 "{{baseurl}}tasks"
               ],
               "path": [
-                "692f58c5f4e15900eff7e611"
+                "692f67777241104749ab13dd"
               ]
             }
           },

@@ -60,7 +60,7 @@ export const authenticateToken = async (
         is_show: true,
       });
     }
-    console.error("Token verification failed:", err);
+    console.error("Token verification failed:", err.message);
     return sendApiResponse(res, 500, false, "Token verification failed", {
       is_show: true,
     });
