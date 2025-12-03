@@ -69,6 +69,8 @@ JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=10m
 
 Running the App
+---------------
+
 Development
 npm run dev
 
@@ -79,10 +81,12 @@ Production
 npm start
 
 API Endpoints
+-------------
 Auth
 Method	Endpoint	Description
 POST	/users/register	Register user
 POST	/users/login	Login user
+
 Tasks (Protected)
 Method	Endpoint	Description
 POST	/tasks	Create a task

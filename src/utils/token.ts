@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const accessSecret = process.env.JWT_ACCESS_SECRET!;
 
 const accessExpiry = (process.env.JWT_ACCESS_EXPIRES_IN ||
-  "10m") as jwt.SignOptions["expiresIn"];
+  "15m") as jwt.SignOptions["expiresIn"];
 
 export const generateAccessToken = (payload: object) => {
   const accessToken = jwt.sign(payload, accessSecret, {
