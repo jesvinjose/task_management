@@ -4,12 +4,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model";
 import { generateAccessToken } from "../utils/token";
 import { sendApiResponse } from "../utils/sendApiResponse";
-import { JwtPayload } from "jsonwebtoken";
 
-interface MyJwtPayload extends JwtPayload {
-  id: string;
-  email: string;
-}
 
 export const loginUser = async (
   req: Request,
@@ -45,7 +40,7 @@ export const loginUser = async (
       is_show: true,
     });
   } catch (error:any) {
-    console.error("Login Error:", error.message);
+    // console.error("Login Error:", error.message);
     next(error);
   }
 };

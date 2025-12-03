@@ -80,6 +80,9 @@ npm run build
 Production
 npm start
 
+Test
+npm test
+
 API Endpoints
 -------------
 Auth
